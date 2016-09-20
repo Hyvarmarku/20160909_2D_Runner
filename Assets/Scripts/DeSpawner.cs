@@ -12,7 +12,6 @@ namespace Runner
         {
             if (_spawnnerController == null || !_spawnnerController.AddToPool(other.gameObject))
                 Destroy(other.gameObject);
-
         }
     }
 }
