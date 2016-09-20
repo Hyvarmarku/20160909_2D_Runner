@@ -57,17 +57,21 @@ namespace Runner
             }
 
             // Should we jump?
-			if (_isGrounded && jump)
+			if (jump)
             {
-				_isGrounded = false;
-				Jump ();
+				if (!_isGrounded && !_doubleJumped) 
+				{
+					Jump ();
+					_doubleJumped = true;
+				} 
+				else if (_isGrounded) 
+				{
+					Jump ();
+					_isGrounded = false;
+				}
             }
 
-			else if (!_isGrounded && jump && !_doubleJumped)
-			{
-				Jump ();
-				_doubleJumped = true;
-			}
+
         }
 
 		void Jump()
