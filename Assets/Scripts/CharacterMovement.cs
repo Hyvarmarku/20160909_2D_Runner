@@ -59,21 +59,19 @@ namespace Runner
             // Should we jump?
 			if (jump)
             {
-				//Is the player in air and not jumped twice yet?
-				if (!_isGrounded && !_doubleJumped) 
-				{
-					Jump ();
-					_doubleJumped = true;
-				} 
 				//Is the player on the ground?
-				else if (_isGrounded) 
+				if (_isGrounded) 
 				{
 					Jump ();
 					_isGrounded = false;
 				}
+				//Now player is in the air, but has he jumped twice yet?
+				else if (!_doubleJumped) 
+				{
+					Jump ();
+					_doubleJumped = true;
+				} 
             }
-
-
         }
 
 		void Jump()
