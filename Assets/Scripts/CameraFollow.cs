@@ -8,9 +8,17 @@ namespace Runner
         [SerializeField] private Transform _player;
         [SerializeField] private float _xOffset;
 
+        private bool _follow = true;
+
         void Update()
         {
-            transform.position = new Vector3(_player.transform.position.x + _xOffset, 0, -10);
+            if(_follow)
+                transform.position = new Vector3(_player.transform.position.x + _xOffset, 0, -10);
+        }
+
+        public void GameOver()
+        {
+            _follow = false;
         }
     }
 }

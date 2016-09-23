@@ -68,6 +68,7 @@ namespace Runner
 				//Now player is in the air, but has he jumped twice yet?
 				else if (!_doubleJumped) 
 				{
+                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
 					Jump ();
 					_doubleJumped = true;
 				} 
