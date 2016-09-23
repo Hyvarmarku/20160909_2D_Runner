@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Runner
 {
@@ -7,12 +8,13 @@ namespace Runner
     {
         #region Statics
         private static GameManager _instance;
+        private static bool _isQuitting = false;
 
         public static GameManager Instance
         {
             get
             {
-                if (_instance == null)
+                if (_instance == null && !_isQuitting)
                 {
                     _instance = FindObjectOfType<GameManager>();
                     if (_instance == null)
@@ -46,6 +48,7 @@ namespace Runner
         private Camera _mainCamera;
         private CameraFollow _cameraFollow;
         private GUIManager _guiManager;
+        private int _points = 0;
 
         private void Awake()
         {
@@ -58,10 +61,21 @@ namespace Runner
                 Destroy(this);
         }
 
+        private void OnApplicationQuit()
+        {
+            _isQuitting = true;
+        }
+
         private void Init()
         {
             _mainCamera = Camera.main;
             _cameraFollow = _mainCamera.transform.GetComponent<CameraFollow>();
+            Pause(true);
+        }
+
+        public void StartGame()
+        {
+            Pause(false);
         }
 
         public void Pause(bool pause)
@@ -76,7 +90,19 @@ namespace Runner
         {
             Pause(true);
             _cameraFollow.GameOver();
-            guiManager.ShowMessage("Game Over");
+            guiManager.GameOver();
+        }
+
+
+        public void AddPoints(int points)
+        {
+            _points += points;
+            guiManager.UpdatePoints(_points);
+        }
+
+        public void NewGame()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
